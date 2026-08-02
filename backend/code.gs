@@ -125,6 +125,41 @@ function doPost(e) {
     handleUpdateTestCatalog(payload)
   );
 }
+case "send_notification": {
+  const user = verifyRequestToken(authHeader);
+
+  if (!user) {
+    return jsonResponse(
+      {
+        status: "error",
+        message: "Unauthorized"
+      },
+      401
+    );
+  }
+
+  return jsonResponse(
+    handleSendNotification(payload)
+  );
+}
+
+case "get_user_notifications": {
+  const user = verifyRequestToken(authHeader);
+
+  if (!user) {
+    return jsonResponse(
+      {
+        status: "error",
+        message: "Unauthorized"
+      },
+      401
+    );
+  }
+
+  return jsonResponse(
+    handleGetUserNotifications(user.userId)
+  );
+}
       default:
         return jsonResponse({ status: "error", message: "Unknown action: " + action }, 404);
     }
