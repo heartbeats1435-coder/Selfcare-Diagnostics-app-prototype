@@ -10,7 +10,7 @@ const APP_CONFIG = Object.freeze({
   BUILD_NUMBER: "20260802",
   
   // Backend Google Apps Script Web App URL (Update after deployment in Step 3)
-  APPS_SCRIPT_URL: "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzsRoAuUACwI36lj9csptM_fXdwERKLcXzKIaD8fLsajk3Kk_5Yn_rJ6Bnc7PflCuNt/exec",
   
   // AI Integration (Google Gemini API)
   GEMINI_API_KEY: "YOUR_GEMINI_API_KEY_HERE",
