@@ -357,6 +357,7 @@ Router.addRoute("profile", UIRender.renderProfile);
 Router.addRoute("payment", UIRender.renderPayment);
 Router.addRoute("confirmation", UIRender.renderConfirmation);
 Router.addRoute("technician", UIRender.renderTechnician, true, ["Technician", "Admin", "Super Admin"]);
+Router.addRoute("admin", UIRender.renderAdmin, true, ["Admin", "Super Admin"]);
 
 // Kickstart Router
 window.addEventListener("load", () => Router.init());
