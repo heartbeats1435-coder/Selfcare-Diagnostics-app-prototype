@@ -334,6 +334,8 @@ Router.addRoute("tests", UIRender.renderTests);
 Router.addRoute("cart", UIRender.renderCart);
 Router.addRoute("reports", UIRender.renderReports, true); // Protected
 Router.addRoute("profile", UIRender.renderProfile);
+Router.addRoute("payment", UIRender.renderPayment);
+Router.addRoute("confirmation", UIRender.renderConfirmation);
 
 // Kickstart Router
 window.addEventListener("load", () => Router.init());
