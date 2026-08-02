@@ -25,6 +25,9 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
+    enforceSecurityCheck(e);
+
+    // Existing doPost routing logic...
     if (!e.postData || !e.postData.contents) {
       return jsonResponse({ status: "error", message: "Empty request body" }, 400);
     }
