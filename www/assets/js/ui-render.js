@@ -157,9 +157,17 @@ const UIRender = {
   /**
    * Placeholder Renderers for Core Navigation Tabs (Expanded in Steps 8-15)
    */
+    /**
+   * Integrated Customer Home Screen
+   */
   renderHome() {
-    const user = Store.state.user || { fullName: "Guest User" };
-    return `
+    // Automatically trigger catalog fetch if empty
+    if (HomeView.testsList.length === 0 && !HomeView.isLoading) {
+      setTimeout(() => HomeView.loadCatalog(), 50);
+    }
+    return HomeView.render();
+  },
+
       <div style="padding: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
           <div>
