@@ -70,7 +70,12 @@ function doPost(e) {
       customerId: user ? user.userId : "GUEST"
     })
   );
-}
+}      
+      case "get_customer_reports": {
+        const user = verifyRequestToken(authHeader);
+        if (!user) return jsonResponse({ status: "error", message: "Unauthorized token" }, 401);
+        return jsonResponse(handleGetCustomerReports(user.userId));
+      }
       default:
         return jsonResponse({ status: "error", message: "Unknown action: " + action }, 404);
     }
