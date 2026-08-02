@@ -90,6 +90,41 @@ function doPost(e) {
     handleUpdateSampleStatus(payload)
   );
 }
+      case "get_admin_analytics": {
+  const user = verifyRequestToken(authHeader);
+
+  if (!user || (user.role !== "Admin" && user.role !== "Super Admin")) {
+    return jsonResponse(
+      {
+        status: "error",
+        message: "Forbidden: Admin privileges required"
+      },
+      403
+    );
+  }
+
+  return jsonResponse(
+    handleGetAdminAnalytics()
+  );
+}
+
+     case "update_test_catalog": {
+  const user = verifyRequestToken(authHeader);
+
+  if (!user || (user.role !== "Admin" && user.role !== "Super Admin")) {
+    return jsonResponse(
+      {
+        status: "error",
+        message: "Forbidden"
+      },
+      403
+    );
+  }
+
+  return jsonResponse(
+    handleUpdateTestCatalog(payload)
+  );
+}
       default:
         return jsonResponse({ status: "error", message: "Unknown action: " + action }, 404);
     }
