@@ -198,7 +198,102 @@ const UIRender = {
 
   renderTests() { return `<div style="padding: 16px;"><h2>Diagnostic Tests & Packages</h2><p>Step 8 & 10 view placeholder...</p></div>`; },
   renderCart() { return `<div style="padding: 16px;"><h2>Your Shopping Cart</h2><p>Cart items will appear here...</p></div>`; },
-  renderReports() { return `<div style="padding: 16px;"><h2>Diagnostic Reports</h2><p>Reports view placeholder...</p></div>`; },
+  renderReports() { return `<div style="padding: 16px;"><h2>Diagnostic Reports</h2><p>Reports view placeholder...</p></div>`; },  
+/*** Render Interactive AI Health Hub & Chat View
+   */
+  renderAIAssistant() {
+    return `
+      <div style="padding: 16px;">
+        <!-- Header -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #0284c7); display: flex; align-items: center; justify-content: center; color: white; font-size: 22px;">✨</div>
+          <div>
+            <h3 style="font-size: 18px; font-weight: 800;">Selfcare AI Health Assistant</h3>
+            <p style="font-size: 12px; color: var(--md-sys-color-on-surface-variant);">Symptom checker, Prescription Reader & Smart Guidance</p>
+          </div>
+        </div>
+
+        <!-- AI Feature Tabs -->
+        <div class="card-glass" style="margin-bottom: 20px; padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 10px;">🩺 AI Symptom Test Recommender</h4>
+          <div class="form-group">
+            <textarea id="ai-symptom-input" class="form-input" rows="3" placeholder="Describe how you feel (e.g., Feeling extremely tired, frequent headaches, joint pain...)"></textarea>
+          </div>
+          <button class="btn btn-primary" style="font-size: 13px;" onclick="
+            const val = document.getElementById('ai-symptom-input').value;
+            document.getElementById('ai-symptom-results').innerHTML = '<p style=\'font-size:13px; color:var(--md-sys-color-primary);\'>Analyzing symptoms with Gemini AI...</p>';
+            AIEngine.recommendTestsFromSymptoms(val).then(res => {
+              if(res.status === 'success') {
+                let html = '<div style=\'margin-top:12px; font-size:13px;\'><strong>Recommended Investigations:</strong><ul style=\'margin-left:16px; margin-top:6px;\'>';
+                res.data.recommendations.forEach(r => {
+                  html += `<li style=\'margin-bottom:6px;\'><strong>${r.testName}</strong> - ${r.reason} <span class=\'chip chip-primary\' style=\'font-size:10px;\'>${r.urgency}</span></li>`;
+                });
+                html += '</ul></div>';
+                document.getElementById('ai-symptom-results').innerHTML = html;
+              }
+            });
+          ">
+            ✨ Recommend Tests
+          </button>
+          <div id="ai-symptom-results"></div>
+        </div>
+
+        <!-- AI Prescription Upload -->
+        <div class="card-glass" style="margin-bottom: 20px; padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">📄 AI Prescription Reader</h4>
+          <p style="font-size: 12px; color: var(--md-sys-color-on-surface-variant); margin-bottom: 12px;">Upload prescription photo to extract tests automatically</p>
+          
+          <input type="file" id="prescription-file" accept="image/*" style="display:none;" onchange="
+            const file = this.files[0];
+            if(file) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                document.getElementById('ai-ocr-results').innerHTML = '<p style=\'font-size:13px; color:var(--md-sys-color-primary);\'>Reading prescription with Gemini Multimodal Vision...</p>';
+                AIEngine.readPrescriptionImage(e.target.result).then(res => {
+                  if(res.status === 'success') {
+                    let h = '<div style=\'margin-top:10px; font-size:13px; color:var(--md-sys-color-success);\'><strong>Detected Investigations:</strong><ul>';
+                    res.data.extractedTests.forEach(t => h += `<li>✓ ${t}</li>`);
+                    h += `</ul><p style=\'font-size:11px; margin-top:4px;\'>${res.data.doctorNotes}</p></div>`;
+                    document.getElementById('ai-ocr-results').innerHTML = h;
+                  }
+                });
+              };
+              reader.readAsDataURL(file);
+            }
+          ">
+          
+          <button class="btn btn-secondary" onclick="document.getElementById('prescription-file').click()">
+            📷 Upload Prescription Photo
+          </button>
+          <div id="ai-ocr-results"></div>
+        </div>
+
+        <!-- Conversational Chat Window -->
+        <div class="card-glass" style="padding: 16px;">
+          <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">💬 Chat with Selfcare AI</h4>
+          <div id="chat-messages" style="max-height: 200px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+            <div style="background: var(--md-sys-color-surface-variant); padding: 8px 12px; border-radius: 8px; align-self: flex-start;">
+              Hello! I am your AI health assistant. Ask me anything about blood tests or health packages.
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="chat-input" class="form-input" placeholder="Ask a health question..." style="font-size: 13px;">
+            <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="
+              const msg = document.getElementById('chat-input').value;
+              if(!msg) return;
+              const box = document.getElementById('chat-messages');
+              box.innerHTML += `<div style=\'background:var(--md-sys-color-primary-container); color:var(--md-sys-color-on-primary-container); padding:8px 12px; border-radius:8px; align-self:flex-end;\'>${msg}</div>`;
+              document.getElementById('chat-input').value = '';
+              AIEngine.chatAssistant(msg).then(reply => {
+                box.innerHTML += `<div style=\'background:var(--md-sys-color-surface-variant); padding:8px 12px; border-radius:8px; align-self:flex-start;\'>${reply}</div>`;
+                box.scrollTop = box.scrollHeight;
+              });
+            ">Send</button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
   renderProfile() { 
     const user = Store.state.user || { fullName: "Guest User", role: "Guest" };
     return `
