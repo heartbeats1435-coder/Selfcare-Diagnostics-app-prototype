@@ -350,6 +350,7 @@ Router.addRoute("reports", UIRender.renderReports, true); // Protected
 Router.addRoute("profile", UIRender.renderProfile);
 Router.addRoute("payment", UIRender.renderPayment);
 Router.addRoute("confirmation", UIRender.renderConfirmation);
+Router.addRoute("technician", UIRender.renderTechnician, true, ["Technician", "Admin", "Super Admin"]);
 
 // Kickstart Router
 window.addEventListener("load", () => Router.init());
