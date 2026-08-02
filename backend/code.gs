@@ -76,6 +76,20 @@ function doPost(e) {
         if (!user) return jsonResponse({ status: "error", message: "Unauthorized token" }, 401);
         return jsonResponse(handleGetCustomerReports(user.userId));
       }
+      case "get_technician_bookings": {
+  const user = verifyRequestToken(authHeader);
+
+  return jsonResponse(
+    handleGetTechnicianBookings(
+      user ? user.userId : "TECH001"
+    )
+  );
+}
+      case "update_sample_status": {
+  return jsonResponse(
+    handleUpdateSampleStatus(payload)
+  );
+}
       default:
         return jsonResponse({ status: "error", message: "Unknown action: " + action }, 404);
     }
