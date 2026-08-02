@@ -217,6 +217,12 @@ renderReports() {
  */
 renderTechnician() {
   return TechnicianView.render();
+},
+/**
+ * Integrated Admin Dashboard
+ */
+renderAdmin() {
+  return AdminView.render();
 },  
 /*** Render Interactive AI Health Hub & Chat View
    */
