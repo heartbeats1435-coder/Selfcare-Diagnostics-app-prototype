@@ -61,7 +61,16 @@ function doPost(e) {
         if (!user) return jsonResponse({ status: "error", message: "Unauthorized token" }, 401);
         return jsonResponse(updateUserProfile(user.userId, payload));
       }
+      case "create_booking": {
+  const user = verifyRequestToken(authHeader);
 
+  return jsonResponse(
+    handleCreateBooking({
+      ...payload,
+      customerId: user ? user.userId : "GUEST"
+    })
+  );
+}
       default:
         return jsonResponse({ status: "error", message: "Unknown action: " + action }, 404);
     }
