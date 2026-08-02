@@ -203,6 +203,9 @@ const UIRender = {
 renderCart() {
   return CartView.render();
 },
+renderTracking() {
+  return TrackingView.renderTracking();
+},
   renderReports() { return `<div style="padding: 16px;"><h2>Diagnostic Reports</h2><p>Reports view placeholder...</p></div>`; },  
 /*** Render Interactive AI Health Hub & Chat View
    */
