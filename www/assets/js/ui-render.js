@@ -206,7 +206,12 @@ renderCart() {
 renderTracking() {
   return TrackingView.renderTracking();
 },
-  renderReports() { return `<div style="padding: 16px;"><h2>Diagnostic Reports</h2><p>Reports view placeholder...</p></div>`; },  
+  /**
+ * Integrated Diagnostic Reports Screen
+ */
+renderReports() {
+  return ReportsView.render();
+},  
 /*** Render Interactive AI Health Hub & Chat View
    */
   renderAIAssistant() {
