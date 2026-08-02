@@ -211,6 +211,12 @@ renderTracking() {
  */
 renderReports() {
   return ReportsView.render();
+},
+/**
+ * Integrated Technician Portal
+ */
+renderTechnician() {
+  return TechnicianView.render();
 },  
 /*** Render Interactive AI Health Hub & Chat View
    */
