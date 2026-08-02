@@ -197,7 +197,12 @@ const UIRender = {
   },
 
   renderTests() { return `<div style="padding: 16px;"><h2>Diagnostic Tests & Packages</h2><p>Step 8 & 10 view placeholder...</p></div>`; },
-  renderCart() { return `<div style="padding: 16px;"><h2>Your Shopping Cart</h2><p>Cart items will appear here...</p></div>`; },
+  /**
+ * Integrated Shopping Cart & Slot View
+ */
+renderCart() {
+  return CartView.render();
+},
   renderReports() { return `<div style="padding: 16px;"><h2>Diagnostic Reports</h2><p>Reports view placeholder...</p></div>`; },  
 /*** Render Interactive AI Health Hub & Chat View
    */
