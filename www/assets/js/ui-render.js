@@ -213,6 +213,12 @@ renderReports() {
   return ReportsView.render();
 },
 /**
+ * Integrated Notifications Screen
+ */
+renderNotifications() {
+  return NotificationsView.render();
+},
+/**
  * Integrated Technician Portal
  */
 renderTechnician() {
@@ -358,6 +364,7 @@ Router.addRoute("payment", UIRender.renderPayment);
 Router.addRoute("confirmation", UIRender.renderConfirmation);
 Router.addRoute("technician", UIRender.renderTechnician, true, ["Technician", "Admin", "Super Admin"]);
 Router.addRoute("admin", UIRender.renderAdmin, true, ["Admin", "Super Admin"]);
+Router.addRoute("notifications", UIRender.renderNotifications, true); // Protected route
 
 // Kickstart Router
 window.addEventListener("load", () => Router.init());
